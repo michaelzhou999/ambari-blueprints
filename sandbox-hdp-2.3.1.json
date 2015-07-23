@@ -1,0 +1,432 @@
+{
+  "href" : "http://localhost:8080/api/v1/blueprints/sandbox",
+  "configurations" : [
+    {
+      "ams-hbase-env" : {
+        "properties" : {
+          "hbase_master_heapsize" : "512m",
+          "hbase_regionserver_heapsize" : "512m",
+          "hbase_regionserver_xmn_max" : "256m",
+          "hbase_regionserver_xmn_ratio" : "0.2"
+        }
+      }
+    },
+    {
+      "capacity-scheduler" : {
+        "properties" : {
+          "yarn.scheduler.capacity.maximum-am-resource-percent" : "0.5",
+          "yarn.scheduler.capacity.root.default.maximum-am-resource-percent" : "0.5"
+        }
+      }
+    },
+    {
+      "cluster-env" : {
+        "properties" : {
+          "cluster_name" : "sandbox",
+          "user_group" : "hadoop",
+          "smokeuser" : "ambari-qa",
+          "security_enabled" : "false"
+        }
+      }
+    },
+    {
+      "core-site" : {
+        "properties" : {
+          "hadoop.proxyuser.hue.hosts" : "*",
+          "hadoop.proxyuser.root.groups" : "*",
+          "hadoop.proxyuser.oozie.groups" : "*",
+          "hadoop.proxyuser.hcat.hosts" : "*",
+          "hadoop.proxyuser.hue.groups" : "*",
+          "hadoop.proxyuser.hcat.groups" : "*",
+          "hadoop.proxyuser.oozie.hosts" : "*",
+          "hadoop.proxyuser.root.hosts" : "*"
+        }
+      }
+    },
+    {
+      "gateway-log4j" : {
+        "properties" : {
+          "content" : "# Licensed to the Apache Software Foundation (ASF) under one\n# or more contributor license agreements.  See the NOTICE file\n# distributed with this work for additional information\n# regarding copyright ownership.  The ASF licenses this file\n# to you under the Apache License, Version 2.0 (the\n# \"License\"); you may not use this file except in compliance\n# with the License.  You may obtain a copy of the License at\n#\n#     http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n\napp.log.dir=${launcher.dir}/../logs\napp.log.file=${launcher.name}.log\napp.audit.file=${launcher.name}-audit.log\n\nlog4j.rootLogger=ERROR, drfa\n\nlog4j.logger.org.apache.hadoop.gateway=INFO\n#log4j.logger.org.apache.hadoop.gateway=DEBUG\n\n#log4j.logger.org.eclipse.jetty=DEBUG\n#log4j.logger.org.apache.shiro=DEBUG\n#log4j.logger.org.apache.http=DEBUG\n#log4j.logger.org.apache.http.client=DEBUG\n#log4j.logger.org.apache.http.headers=DEBUG\n#log4j.logger.org.apache.http.wire=DEBUG\n\nlog4j.appender.stdout=org.apache.log4j.ConsoleAppender\nlog4j.appender.stdout.layout=org.apache.log4j.PatternLayout\nlog4j.appender.stdout.layout.ConversionPattern=%d{yy/MM/dd HH:mm:ss} %p %c{2}: %m%n\n\nlog4j.appender.drfa=org.apache.log4j.DailyRollingFileAppender\nlog4j.appender.drfa.File=${app.log.dir}/${app.log.file}\nlog4j.appender.drfa.DatePattern=.yyyy-MM-dd\nlog4j.appender.drfa.layout=org.apache.log4j.PatternLayout\nlog4j.appender.drfa.layout.ConversionPattern=%d{ISO8601} %-5p %c{2} (%F:%M(%L)) - %m%n\n\nlog4j.logger.audit=INFO, auditfile\nlog4j.appender.auditfile=org.apache.log4j.DailyRollingFileAppender\nlog4j.appender.auditfile.File=${app.log.dir}/${app.audit.file}\nlog4j.appender.auditfile.Append = true\nlog4j.appender.auditfile.DatePattern = '.'yyyy-MM-dd\nlog4j.appender.auditfile.layout = org.apache.hadoop.gateway.audit.log4j.layout.AuditLayout"
+        }
+      }
+    },
+    {
+      "gateway-site" : {
+        "properties" : {
+          "gateway.hadoop.kerberos.secured" : "false",
+          "sun.security.krb5.debug" : "true",
+          "gateway.path" : "gateway",
+          "gateway.gateway.conf.dir" : "deployments",
+          "java.security.auth.login.config" : "/etc/knox/conf/krb5JAASLogin.conf",
+          "java.security.krb5.conf" : "/etc/knox/conf/krb5.conf",
+          "gateway.port" : "8443"
+        }
+      }
+    },
+    {
+      "hadoop-env" : {
+        "properties" : {
+          "hadoop_heapsize" : "250",
+          "namenode_opt_newsize" : "50",
+          "dtnode_heapsize" : "250",
+          "namenode_opt_maxnewsize" : "100",
+          "namenode_heapsize" : "250"
+        }
+      }
+    },
+    {
+      "hbase-site" : {
+        "properties" : {
+          "hbase.rpc.engine" : "org.apache.hadoop.hbase.ipc.SecureRpcEngine",
+          "hbase.security.authorization" : "true",
+          "hbase_master_heapsize" : "250",
+          "hbase.rpc.protection" : "PRIVACY",
+          "hbase_regionserver_heapsize" : "250"
+        }
+      }
+    },
+    {
+      "hdfs-site" : {
+        "properties" : {
+          "dfs.nfs.exports.allowed.hosts" : "* rw",
+          "dfs.datanode.max.xcievers" : "1024",
+          "dfs.nfs3.dump.dir" : "/tmp/.hdfs-nfs",
+          "dfs.block.access.token.enable" : "false",
+          "dfs.replication" : "1",
+          "dfs.block.size" : "34217472",
+          "dfs.namenode.accesstime.precision" : "3600000"
+        }
+      }
+    },
+    {
+      "hiveserver2-site" : {
+        "properties" : {
+          "hive.security.authenticator.manager" : "org.apache.hadoop.hive.ql.security.SessionStateUserAuthenticator",
+          "hive.security.authorization.enabled" : "true",
+          "hive.security.authorization.manager" : "org.apache.ranger.authorization.hive.authorizer.RangerHiveAuthorizerFactory"
+        }
+      }
+    },
+    {
+      "hive-site" : {
+        "properties" : {
+          "hive.txn.max.open.batch" : "1000",
+          "hive_metastore_user_passwd" : "hive",
+          "hive.compactor.initiator.on" : "true",
+          "javax.jdo.option.ConnectionPassword" : "hive",
+          "hive.exec.dynamic.partition.mode" : "nonstrict",
+          "hive.enforce.bucketing" : "true",
+          "hive.compactor.check.interval" : "300s",
+          "hive.tez.java.opts" : "-server -Xmx200m -Djava.net.preferIPv4Stack=true",
+          "hive.txn.manager" : "org.apache.hadoop.hive.ql.lockmgr.DbTxnManager",
+          "hive.txn.timeout" : "300",
+          "hive.users.in.admin.role" : "hue,hive",
+          "hive.compactor.worker.timeout" : "86400s",
+          "hive.tez.container.size" : "250",
+          "hive.security.authorization.enabled" : "false",
+          "hive.server2.enable.doAs" : "false",
+          "hive.support.concurrency" : "true"
+        }
+      }
+    },
+    {
+      "knox-env" : {
+        "properties" : {
+          "knox_master_secret" : "knox",
+          "knox_group" : "knox",
+          "knox_pid_dir" : "/var/run/knox",
+          "knox_user" : "knox"
+        }
+      }
+    },
+    {
+      "mapred-env" : {
+        "properties" : {
+          "jobhistory_heapsize" : "250"
+        }
+      }
+    },
+    {
+      "mapred-site" : {
+        "properties" : {
+          "mapreduce.map.memory.mb" : "250",
+          "mapred.child.java.opts" : "-Xmx200m",
+          "yarn.app.mapreduce.am.command-opts" : "-Xmx200m",
+          "mapred.job.reduce.memory.mb" : "250",
+          "mapreduce.reduce.memory.mb" : "250",
+          "io.sort.mb" : "64",
+          "yarn.app.mapreduce.am.resource.mb" : "250",
+          "mapred.job.map.memory.mb" : "250",
+          "mapreduce.reduce.java.opts" : "-Xmx200m",
+          "mapreduce.map.java.opts" : "-Xmx200m",
+          "mapreduce.task.io.sort.mb" : "64"
+        }
+      }
+    },
+    {
+      "metadata-env" : {
+        "properties" : {
+          "metadata_pid_dir" : "/var/run/atlas",
+          "metadata_port" : "21000",
+          "metadata_data_dir" : "/var/lib/atlas/data",
+          "metadata_log_dir" : "/var/log/atlas",
+          "metadata_opts" : " ",
+          "metadata_classpath" : " ",
+          "metadata_user" : "atlas",
+          "metadata_expanded_war_dir" : "./server/webapp"
+        }
+      }
+    },
+    {
+      "oozie-env" : {
+        "properties" : {
+          "oozie_heapsize" : "2048m",
+          "oozie_permsize" : "512m"
+        }
+      }
+    },
+    {
+      "oozie-site" : {
+        "properties" : {
+          "oozie.service.AuthorizationService.security.enabled" : "true",
+          "oozie.service.AuthorizationService.authorization.enabled" : "true",
+          "oozie.service.ProxyUserService.proxyuser.falcon.groups" : "*",
+          "oozie.service.ELService.ext.functions.coord-sla-submit" : "\n      instanceTime=org.apache.oozie.coord.CoordELFunctions#ph1_coord_nominalTime_echo_fixed,\n      user=org.apache.oozie.coord.CoordELFunctions#coord_user",
+          "oozie.service.HadoopAccessorService.kerberos.enabled" : "false",
+          "oozie.authentication.type" : "simple",
+          "oozie.credentials.credentialclasses" : "hcat=org.apache.oozie.action.hadoop.HCatCredentials,hive2=org.apache.oozie.action.hadoop.Hive2Credentials",
+          "oozie.service.ProxyUserService.proxyuser.falcon.hosts" : "*",
+          "oozie.base.url" : "http://%HOSTGROUP::host_group_1%:11000/oozie",
+          "oozie.service.ELService.ext.functions.coord-sla-create" : "\n      instanceTime=org.apache.oozie.coord.CoordELFunctions#ph2_coord_nominalTime,\n      user=org.apache.oozie.coord.CoordELFunctions#coord_user",
+          "oozie.service.JPAService.jdbc.username" : "oozie",
+          "oozie.authentication.kerberos.name.rules" : "\n    ",
+          "oozie.service.ProxyUserService.proxyuser.hue.hosts" : "*",
+          "oozie.service.ELService.ext.functions.coord-action-create" : "\n      now=org.apache.oozie.extensions.OozieELExtensions#ph2_now,\n      today=org.apache.oozie.extensions.OozieELExtensions#ph2_today,\n      yesterday=org.apache.oozie.extensions.OozieELExtensions#ph2_yesterday,\n      currentWeek=org.apache.oozie.extensions.OozieELExtensions#ph2_currentWeek,\n      lastWeek=org.apache.oozie.extensions.OozieELExtensions#ph2_lastWeek,\n      currentMonth=org.apache.oozie.extensions.OozieELExtensions#ph2_currentMonth,\n      lastMonth=org.apache.oozie.extensions.OozieELExtensions#ph2_lastMonth,\n      currentYear=org.apache.oozie.extensions.OozieELExtensions#ph2_currentYear,\n      lastYear=org.apache.oozie.extensions.OozieELExtensions#ph2_lastYear,\n      latest=org.apache.oozie.coord.CoordELFunctions#ph2_coord_latest_echo,\n      future=org.apache.oozie.coord.CoordELFunctions#ph2_coord_future_echo,\n      formatTime=org.apache.oozie.coord.CoordELFunctions#ph2_coord_formatTime,\n      user=org.apache.oozie.coord.CoordELFunctions#coord_user",
+          "oozie.service.ELService.ext.functions.coord-job-submit-data" : "\n      now=org.apache.oozie.extensions.OozieELExtensions#ph1_now_echo,\n      today=org.apache.oozie.extensions.OozieELExtensions#ph1_today_echo,\n      yesterday=org.apache.oozie.extensions.OozieELExtensions#ph1_yesterday_echo,\n      currentWeek=org.apache.oozie.extensions.OozieELExtensions#ph1_currentWeek_echo,\n      lastWeek=org.apache.oozie.extensions.OozieELExtensions#ph1_lastWeek_echo,\n      currentMonth=org.apache.oozie.extensions.OozieELExtensions#ph1_currentMonth_echo,\n      lastMonth=org.apache.oozie.extensions.OozieELExtensions#ph1_lastMonth_echo,\n      currentYear=org.apache.oozie.extensions.OozieELExtensions#ph1_currentYear_echo,\n      lastYear=org.apache.oozie.extensions.OozieELExtensions#ph1_lastYear_echo,\n      dataIn=org.apache.oozie.extensions.OozieELExtensions#ph1_dataIn_echo,\n      instanceTime=org.apache.oozie.coord.CoordELFunctions#ph1_coord_nominalTime_echo_wrap,\n      formatTime=org.apache.oozie.coord.CoordELFunctions#ph1_coord_formatTime_echo,\n      dateOffset=org.apache.oozie.coord.CoordELFunctions#ph1_coord_dateOffset_echo,\n      user=org.apache.oozie.coord.CoordELFunctions#coord_user",
+          "oozie.service.ELService.ext.functions.coord-action-create-inst" : "\n      now=org.apache.oozie.extensions.OozieELExtensions#ph2_now_inst,\n      today=org.apache.oozie.extensions.OozieELExtensions#ph2_today_inst,\n      yesterday=org.apache.oozie.extensions.OozieELExtensions#ph2_yesterday_inst,\n      currentWeek=org.apache.oozie.extensions.OozieELExtensions#ph2_currentWeek_inst,\n      lastWeek=org.apache.oozie.extensions.OozieELExtensions#ph2_lastWeek_inst,\n      currentMonth=org.apache.oozie.extensions.OozieELExtensions#ph2_currentMonth_inst,\n      lastMonth=org.apache.oozie.extensions.OozieELExtensions#ph2_lastMonth_inst,\n      currentYear=org.apache.oozie.extensions.OozieELExtensions#ph2_currentYear_inst,\n      lastYear=org.apache.oozie.extensions.OozieELExtensions#ph2_lastYear_inst,\n      latest=org.apache.oozie.coord.CoordELFunctions#ph2_coord_latest_echo,\n      future=org.apache.oozie.coord.CoordELFunctions#ph2_coord_future_echo,\n      formatTime=org.apache.oozie.coord.CoordELFunctions#ph2_coord_formatTime,\n      user=org.apache.oozie.coord.CoordELFunctions#coord_user",
+          "oozie.authentication.simple.anonymous.allowed" : "true",
+          "oozie.service.HadoopAccessorService.supported.filesystems" : "*",
+          "oozie.service.JPAService.jdbc.password" : "oozie",
+          "oozie.service.ELService.ext.functions.coord-action-start" : "\n      now=org.apache.oozie.extensions.OozieELExtensions#ph2_now,\n      today=org.apache.oozie.extensions.OozieELExtensions#ph2_today,\n      yesterday=org.apache.oozie.extensions.OozieELExtensions#ph2_yesterday,\n      currentWeek=org.apache.oozie.extensions.OozieELExtensions#ph2_currentWeek,\n      lastWeek=org.apache.oozie.extensions.OozieELExtensions#ph2_lastWeek,\n      currentMonth=org.apache.oozie.extensions.OozieELExtensions#ph2_currentMonth,\n      lastMonth=org.apache.oozie.extensions.OozieELExtensions#ph2_lastMonth,\n      currentYear=org.apache.oozie.extensions.OozieELExtensions#ph2_currentYear,\n      lastYear=org.apache.oozie.extensions.OozieELExtensions#ph2_lastYear,\n      latest=org.apache.oozie.coord.CoordELFunctions#ph3_coord_latest,\n      future=org.apache.oozie.coord.CoordELFunctions#ph3_coord_future,\n      dataIn=org.apache.oozie.extensions.OozieELExtensions#ph3_dataIn,\n      instanceTime=org.apache.oozie.coord.CoordELFunctions#ph3_coord_nominalTime,\n      dateOffset=org.apache.oozie.coord.CoordELFunctions#ph3_coord_dateOffset,\n      formatTime=org.apache.oozie.coord.CoordELFunctions#ph3_coord_formatTime,\n      user=org.apache.oozie.coord.CoordELFunctions#coord_user",
+          "oozie.db.schema.name" : "oozie",
+          "oozie.services.ext" : "org.apache.oozie.service.JMSAccessorService,org.apache.oozie.service.PartitionDependencyManagerService,org.apache.oozie.service.HCatAccessorService",
+          "oozie.service.JPAService.jdbc.driver" : "org.apache.derby.jdbc.EmbeddedDriver",
+          "oozie.service.ELService.ext.functions.coord-job-submit-instances" : "\n      now=org.apache.oozie.extensions.OozieELExtensions#ph1_now_echo,\n      today=org.apache.oozie.extensions.OozieELExtensions#ph1_today_echo,\n      yesterday=org.apache.oozie.extensions.OozieELExtensions#ph1_yesterday_echo,\n      currentWeek=org.apache.oozie.extensions.OozieELExtensions#ph1_currentWeek_echo,\n      lastWeek=org.apache.oozie.extensions.OozieELExtensions#ph1_lastWeek_echo,\n      currentMonth=org.apache.oozie.extensions.OozieELExtensions#ph1_currentMonth_echo,\n      lastMonth=org.apache.oozie.extensions.OozieELExtensions#ph1_lastMonth_echo,\n      currentYear=org.apache.oozie.extensions.OozieELExtensions#ph1_currentYear_echo,\n      lastYear=org.apache.oozie.extensions.OozieELExtensions#ph1_lastYear_echo,\n      formatTime=org.apache.oozie.coord.CoordELFunctions#ph1_coord_formatTime_echo,\n      latest=org.apache.oozie.coord.CoordELFunctions#ph2_coord_latest_echo,\n      future=org.apache.oozie.coord.CoordELFunctions#ph2_coord_future_echo",
+          "oozie.service.ProxyUserService.proxyuser.hue.groups" : "*",
+          "oozie.service.HadoopAccessorService.hadoop.configurations" : "*=/etc/hadoop/conf",
+          "oozie.service.URIHandlerService.uri.handlers" : "org.apache.oozie.dependency.FSURIHandler,org.apache.oozie.dependency.HCatURIHandler"
+        }
+      }
+    },
+    {
+      "storm-site" : {
+        "properties" : {
+          "ui.childopts" : "-Xmx220m",
+          "drpc.childopts" : "-Xmx220m",
+          "nimbus.childopts" : "-Xmx220m -javaagent:/usr/hdp/current/storm-client/contrib/storm-jmxetric/lib/jmxetric-1.0.4.jar=host=sandbox.hortonworks.com,port=8649,wireformat31x=true,mode=multicast,config=/usr/hdp/current/storm-client/contrib/storm-jmxetric/conf/jmxetric-conf.xml,process=Nimbus_JVM",
+          "logviewer.port" : "8005"
+        }
+      }
+    },
+    {
+      "tez-site" : {
+        "properties" : {
+          "yarn.app.mapreduce.am.command-opts" : "-Xmx200m",
+          "tez.am.java.opts" : "-server -Xmx200m -Djava.net.preferIPv4Stack=true -XX:+UseNUMA -XX:+UseParallelGC",
+          "tez.runtime.io.sort.mb" : "150",
+          "tez.am.resource.memory.mb" : "250",
+          "tez.task.launch.cmd-opts" : "-Xmx256m",
+          "tez.dag.am.resource.memory.mb" : "250"
+        }
+      }
+    },
+    {
+      "topology" : {
+        "properties" : {
+          "content" : "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<!--\n  Licensed to the Apache Software Foundation (ASF) under one or more\n  contributor license agreements.  See the NOTICE file distributed with\n  this work for additional information regarding copyright ownership.\n  The ASF licenses this file to You under the Apache License, Version 2.0\n  (the \"License\"); you may not use this file except in compliance with\n  the License.  You may obtain a copy of the License at\n\n      http://www.apache.org/licenses/LICENSE-2.0\n\n  Unless required by applicable law or agreed to in writing, software\n  distributed under the License is distributed on an \"AS IS\" BASIS,\n  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n  See the License for the specific language governing permissions and\n  limitations under the License.\n-->\n<topology>\n\n    <gateway>\n\n        <provider>\n            <role>authentication</role>\n            <name>ShiroProvider</name>\n            <enabled>true</enabled>\n            <param>\n                <!-- \n                session timeout in minutes,  this is really idle timeout,\n                defaults to 30mins, if the property value is not defined,, \n                current client authentication would expire if client idles contiuosly for more than this value\n                -->\n                <name>sessionTimeout</name>\n                <value>30</value>\n            </param>\n            <param>\n                <name>main.ldapRealm</name>\n                <value>org.apache.shiro.realm.ldap.JndiLdapRealm</value>\n            </param>\n            <param>\n                <name>main.ldapRealm.userDnTemplate</name>\n                <value>uid={0},ou=people,dc=hadoop,dc=apache,dc=org</value>\n            </param>\n            <param>\n                <name>main.ldapRealm.contextFactory.url</name>\n                <value>ldap://localhost:33389</value>\n            </param>\n            <param>\n                <name>main.ldapRealm.contextFactory.authenticationMechanism</name>\n                <value>simple</value>\n            </param>\n            <param>\n                <name>urls./**</name>\n                <value>authcBasic</value>\n            </param>\n        </provider>\n\n        <provider>\n            <role>identity-assertion</role>\n            <name>Pseudo</name>\n            <enabled>true</enabled>\n        </provider>\n\n        <!--\n        Defines rules for mapping host names internal to a Hadoop cluster to externally accessible host names.\n        For example, a hadoop service running in AWS may return a response that includes URLs containing the\n        some AWS internal host name.  If the client needs to make a subsequent request to the host identified\n        in those URLs they need to be mapped to external host names that the client Knox can use to connect.\n\n        If the external hostname and internal host names are same turn of this provider by setting the value of\n        enabled parameter as false.\n\n        The name parameter specifies the external host names in a comma separated list.\n        The value parameter specifies corresponding internal host names in a comma separated list.\n\n        Note that when you are using Sandbox, the external hostname needs to be localhost, as seen in out\n        of box sandbox.xml.  This is because Sandbox uses port mapping to allow clients to connect to the\n        Hadoop services using localhost.  In real clusters, external host names would almost never be localhost.\n        -->\n        <provider>\n            <role>hostmap</role>\n            <name>static</name>\n            <enabled>true</enabled>\n            <param><name>localhost</name><value>sandbox,sandbox.hortonworks.com</value></param>\n        </provider>\n\n    </gateway>\n\n    <service>\n        <role>NAMENODE</role>\n        <url>hdfs://sandbox:8020</url>\n    </service>\n\n    <service>\n        <role>JOBTRACKER</role>\n        <url>rpc://sandbox:8050</url>\n    </service>\n\n    <service>\n        <role>WEBHDFS</role>\n        <url>http://sandbox:50070/webhdfs</url>\n    </service>\n\n    <service>\n        <role>WEBHCAT</role>\n        <url>http://sandbox:50111/templeton</url>\n    </service>\n\n    <service>\n        <role>OOZIE</role>\n        <url>http://sandbox:11000/oozie</url>\n    </service>\n\n    <service>\n        <role>WEBHBASE</role>\n        <url>http://sandbox:60080</url>\n    </service>\n\n    <service>\n        <role>HIVE</role>\n        <url>http://sandbox:10001/cliservice</url>\n    </service>\n\n    <service>\n        <role>RESOURCEMANAGER</role>\n        <url>http://sandbox:8088/ws</url>\n    </service>\n\n\n</topology>"
+        }
+      }
+    },
+    {
+      "users-ldif" : {
+        "properties" : {
+          "content" : "# Licensed to the Apache Software Foundation (ASF) under one\n# or more contributor license agreements.  See the NOTICE file\n# distributed with this work for additional information\n# regarding copyright ownership.  The ASF licenses this file\n# to you under the Apache License, Version 2.0 (the\n# \"License\"); you may not use this file except in compliance\n# with the License.  You may obtain a copy of the License at\n#\n#     http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n\nversion: 1\n\n# Please replace with site specific values\ndn: dc=hadoop,dc=apache,dc=org\nobjectclass: organization\nobjectclass: dcObject\no: Hadoop\ndc: hadoop\n\n# Entry for a sample people container\n# Please replace with site specific values\ndn: ou=people,dc=hadoop,dc=apache,dc=org\nobjectclass:top\nobjectclass:organizationalUnit\nou: people\n\n# Entry for a sample end user\n# Please replace with site specific values\ndn: uid=guest,ou=people,dc=hadoop,dc=apache,dc=org\nobjectclass:top\nobjectclass:person\nobjectclass:organizationalPerson\nobjectclass:inetOrgPerson\ncn: Guest\nsn: User\nuid: guest\nuserPassword:guest-password\n\n# entry for sample user admin\ndn: uid=admin,ou=people,dc=hadoop,dc=apache,dc=org\nobjectclass:top\nobjectclass:person\nobjectclass:organizationalPerson\nobjectclass:inetOrgPerson\ncn: Admin\nsn: Admin\nuid: admin\nuserPassword:admin-password\n\n# entry for sample user sam\ndn: uid=sam,ou=people,dc=hadoop,dc=apache,dc=org\nobjectclass:top\nobjectclass:person\nobjectclass:organizationalPerson\nobjectclass:inetOrgPerson\ncn: sam\nsn: sam\nuid: sam\nuserPassword:sam-password\n\n# entry for sample user tom\ndn: uid=tom,ou=people,dc=hadoop,dc=apache,dc=org\nobjectclass:top\nobjectclass:person\nobjectclass:organizationalPerson\nobjectclass:inetOrgPerson\ncn: tom\nsn: tom\nuid: tom\nuserPassword:tom-password\n\n# create FIRST Level groups branch\ndn: ou=groups,dc=hadoop,dc=apache,dc=org\nobjectclass:top\nobjectclass:organizationalUnit\nou: groups\ndescription: generic groups branch\n\n# create the analyst group under groups\ndn: cn=analyst,ou=groups,dc=hadoop,dc=apache,dc=org\nobjectclass:top\nobjectclass: groupofnames\ncn: analyst\ndescription:analyst  group\nmember: uid=sam,ou=people,dc=hadoop,dc=apache,dc=org\nmember: uid=tom,ou=people,dc=hadoop,dc=apache,dc=org\n\n\n# create the scientist group under groups\ndn: cn=scientist,ou=groups,dc=hadoop,dc=apache,dc=org\nobjectclass:top\nobjectclass: groupofnames\ncn: scientist\ndescription: scientist group\nmember: uid=sam,ou=people,dc=hadoop,dc=apache,dc=org"
+        }
+      }
+    },
+    {
+      "webhcat-site" : {
+        "properties" : {
+          "webhcat.proxyuser.hue.hosts" : "*",
+          "webhcat.proxyuser.hue.groups" : "*",
+          "webhcat.proxyuser.hcat.groups" : "*",
+          "templeton.hive.properties" : "hive.metastore.local=false,hive.metastore.uris=thrift://sandbox.hortonworks.com:9083,hive.metastore.sasl.enabled=false,hive.metastore.execute.setugi=true,hive.metastore.warehouse.dir=/apps/hive/warehouse",
+          "webhcat.proxyuser.hcat.hosts" : "*"
+        }
+      }
+    },
+    {
+      "yarn-env" : {
+        "properties" : {
+          "resourcemanager_heapsize" : "250",
+          "nodemanager_heapsize" : "250",
+          "apptimelineserver_heapsize" : "250",
+          "yarn_heapsize" : "250"
+        }
+      }
+    },
+    {
+      "yarn-site" : {
+        "properties" : {
+          "yarn.nodemanager.resource.memory-mb" : "2250",
+          "yarn.acl.enable" : "false",
+          "yarn.scheduler.minimum-allocation-mb" : "250",
+          "yarn.resourcemanager.webapp.proxyuser.oozie.hosts" : "*",
+          "yarn.resourcemanager.webapp.proxyuser.hcat.hosts" : "*",
+          "yarn.resourcemanager.webapp.proxyuser.hcat.groups" : "*",
+          "yarn.nodemanager.vmem-pmem-ratio" : "10",
+          "yarn.resourcemanager.webapp.proxyuser.oozie.groups" : "*",
+          "yarn.scheduler.maximum-allocation-mb" : "2250",
+          "yarn.nodemanager.pmem-check-enabled" : "false"
+        }
+      }
+    }
+  ],
+  "host_groups" : [
+    {
+      "name" : "host_group_1",
+      "configurations" : [ ],
+      "components" : [
+        {
+          "name" : "APP_TIMELINE_SERVER"
+        },
+        {
+          "name" : "ATLAS_SERVER"
+        },
+        {
+          "name" : "DATANODE"
+        },
+        {
+          "name" : "DRPC_SERVER"
+        },
+        {
+          "name" : "FALCON_CLIENT"
+        },
+        {
+          "name" : "FALCON_SERVER"
+        },
+        {
+          "name" : "FLUME_HANDLER"
+        },
+        {
+          "name" : "HBASE_CLIENT"
+        },
+        {
+          "name" : "HBASE_MASTER"
+        },
+        {
+          "name" : "HBASE_REGIONSERVER"
+        },
+        {
+          "name" : "HDFS_CLIENT"
+        },
+        {
+          "name" : "HISTORYSERVER"
+        },
+        {
+          "name" : "HIVE_CLIENT"
+        },
+        {
+          "name" : "HIVE_METASTORE"
+        },
+        {
+          "name" : "HIVE_SERVER"
+        },
+        {
+          "name" : "KAFKA_BROKER"
+        },
+        {
+          "name" : "KNOX_GATEWAY"
+        },
+        {
+          "name" : "MAPREDUCE2_CLIENT"
+        },
+        {
+          "name" : "METRICS_COLLECTOR"
+        },
+        {
+          "name" : "METRICS_MONITOR"
+        },
+        {
+          "name" : "MYSQL_SERVER"
+        },
+        {
+          "name" : "NAMENODE"
+        },
+        {
+          "name" : "NFS_GATEWAY"
+        },
+        {
+          "name" : "NIMBUS"
+        },
+        {
+          "name" : "NODEMANAGER"
+        },
+        {
+          "name" : "OOZIE_CLIENT"
+        },
+        {
+          "name" : "OOZIE_SERVER"
+        },
+        {
+          "name" : "PIG"
+        },
+        {
+          "name" : "RESOURCEMANAGER"
+        },
+        {
+          "name" : "SECONDARY_NAMENODE"
+        },
+        {
+          "name" : "SLIDER"
+        },
+        {
+          "name" : "SPARK_CLIENT"
+        },
+        {
+          "name" : "SPARK_JOBHISTORYSERVER"
+        },
+        {
+          "name" : "SQOOP"
+        },
+        {
+          "name" : "STORM_UI_SERVER"
+        },
+        {
+          "name" : "SUPERVISOR"
+        },
+        {
+          "name" : "TEZ_CLIENT"
+        },
+        {
+          "name" : "WEBHCAT_SERVER"
+        },
+        {
+          "name" : "YARN_CLIENT"
+        },
+        {
+          "name" : "ZOOKEEPER_CLIENT"
+        },
+        {
+          "name" : "ZOOKEEPER_SERVER"
+        }
+      ],
+      "cardinality" : "1"
+    }
+  ],
+  "Blueprints" : {
+    "blueprint_name" : "sandbox",
+    "stack_name" : "HDP",
+    "stack_version" : "2.3"
+  }
+}
