@@ -1,2 +1,2 @@
 # ambari-blueprints
-Ambari Blueprints example
+Ambari Blueprint Examples
